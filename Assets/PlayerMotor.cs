@@ -1,3 +1,4 @@
+using System.Runtime.CompilerServices;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -11,7 +12,7 @@ public class PlayerMotor : MonoBehaviour
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     private void Start()
     {
-       rigidbody2D = GetComponent<Rigidbody2D>();
+        rigidbody2D = GetComponent<Rigidbody2D>();
     }
     // Update is called once per frame
     private void Update()
@@ -24,19 +25,22 @@ public class PlayerMotor : MonoBehaviour
         direction = value.Get<Vector2>();
     }
 
-    private void OnJump(InputValue value)
+    private void OnJump()
     {
         if (canJump)
         {
 
             rigidbody2D.AddForce(Vector2.up * jumpForce, ForceMode2D.Impulse);
             canJump = false;
-        }//wy³¹czyæ mo¿liwoœæ skoku
+        }
+    }
+
+
+    private void OnCollisionEnter2D(Collision2D collision)
+    {
+        canJump = true;
     }
 }
-
-
-
 
 
 
