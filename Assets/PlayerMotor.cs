@@ -1,23 +1,51 @@
 using System.Runtime.CompilerServices;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using UnityEngine.Rendering;
 
 public class PlayerMotor : MonoBehaviour
 {
     Vector2 direction;
     private bool canJump = true;
     private Rigidbody2D rigidbody2D;
-    public float speed = 10;
-    public float jumpForce = 10;
+    public float speed = 5;
+    public float jumpForce = 5;
+    public float maxSpeed = 10;
+    public float stopingForce = 10;
+    public float stoppingForce = 10;
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     private void Start()
     {
         rigidbody2D = GetComponent<Rigidbody2D>();
     }
     // Update is called once per frame
-    private void Update()
+    private void FixedUpdate()
     {
-        transform.position += new Vector3(direction.x, direction.y, 0) * Time.deltaTime * speed;
+        rigidbody2D.AddForce(new Vector2(direction.x * speed, 0));
+
+        MaxSpeed();
+
+        PlayerStopping();
+    }
+
+    private void MaxSpeed()
+    {
+        if (rigidbody2D.linearVelocityX >= maxSpeed)
+        {
+            rigidbody2D.linearVelocityX = maxSpeed;
+        }
+        else if (rigidbody2D.linearVelocityX <= -maxSpeed)
+        {
+            rigidbody2D.linearVelocityX = -maxSpeed;
+        }
+    }
+
+    private void PlayerStopping()
+    {
+        if (direction.x == 0 && rigidbody2D.linearVelocityX != 0)
+        {
+            rigidbody2D.AddForce(new Vector2(-rigidbody2D.linearVelocityX * stoppingForce, 0));
+        }
     }
 
     private void OnMove(InputValue value)
