@@ -23,6 +23,6 @@ public class UiHealthDisplay : MonoBehaviour
     public void OnHealthInitialize(float newHealth)
     {
 
-
+        healthtext.text += newHealth.ToString();
     }
 }
