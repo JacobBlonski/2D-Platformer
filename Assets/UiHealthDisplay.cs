@@ -11,6 +11,7 @@ public class UiHealthDisplay : MonoBehaviour
     void Start()
     {
         playerHealth.OnHealthChanged += OnHealthChanged;
+        playerHealth.OnHealthInitialize += OnHealthInitialize;
     }
 
     public void OnHealthChanged(float newHealth, float amountChanged)
