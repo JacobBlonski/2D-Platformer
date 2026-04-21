@@ -5,7 +5,7 @@ using UnityEngine;
 public class PlayerHealth : MonoBehaviour
 {
     public float maxHealth = 100;
-    public float health;
+    public float currentHealth;
     private bool canReceiveDamage = true;
     public float invincibilityTimer = 2;
 
@@ -15,10 +15,10 @@ public class PlayerHealth : MonoBehaviour
     public delegate void HealthHandler(float newHealth);
     public event HealthHandler OnHealthInitialize;
     // Start is called once before the first execution of Update after the MonoBehaviour is created
-    void Start()
+    private void Start()
     {
-        health = maxHealth;
-        OnHealthInitialize?.Invoke(health);
+        currentHealth = maxHealth;
+        OnHealthInitialize?.Invoke(currentHealth);
     }
 
     // Update is called once per frame
@@ -32,12 +32,12 @@ public class PlayerHealth : MonoBehaviour
 
         if (canReceiveDamage)
         {
-            health -= damage;
-            OnHealthChanged?.Invoke(health, -damage);
+            currentHealth -= damage;
+            OnHealthChanged?.Invoke(currentHealth, -damage);
             canReceiveDamage = false;
             StartCoroutine(InvincibilityTimer(invincibilityTimer, ResetInvincibility));
         }
-        Debug.Log(health);
+        Debug.Log(currentHealth);
     }
 
     IEnumerator InvincibilityTimer(float time, Action callback)
@@ -53,8 +53,18 @@ public class PlayerHealth : MonoBehaviour
     }
     public void AddHealth(float healthToAdd)
     {
-        health += healthToAdd;
-        OnHealthChanged?.Invoke(health, healthToAdd); 
-        Debug.Log(health);
+        currentHealth += healthToAdd;
+        OnHealthChanged?.Invoke(currentHealth, healthToAdd); 
+        Debug.Log(currentHealth);
+    }
+
+    internal void AddCollect(Collider2D collect)
+    {
+        throw new NotImplementedException();
+    }
+
+    internal void AddCollection(object collect)
+    {
+        throw new NotImplementedException();
     }
 }

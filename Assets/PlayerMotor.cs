@@ -13,6 +13,7 @@ public class PlayerMotor : MonoBehaviour
     public float maxSpeed = 10;
     public float stopingForce = 10;
     public float stoppingForce = 10;
+    public float points;
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     private void Start()
     {
