@@ -3,7 +3,7 @@ using UnityEngine;
 
 public class UICoinDisplay : MonoBehaviour
 {
-    public TextMeshPro CoinText;
+    public TextMeshProUGUI CoinText;
     public PlayerCoin PlayerCoin;
 
     void Awake()
@@ -19,6 +19,7 @@ public class UICoinDisplay : MonoBehaviour
 
     private void OnCoinChanged(float newCoin, float amountChanged)
     {
+        Debug.Log("145145818");
         CoinText.text = newCoin.ToString();
     }
 
