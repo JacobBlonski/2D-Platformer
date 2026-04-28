@@ -8,6 +8,21 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/Poziom 1.unity
     guid: 8c9cfa26abfee488c85f1582747f6a02
+  - enabled: 1
+    path: Assets/Scenes/GameFail.unity
+    guid: 7f8735dc657fb01489f672b465d1fc4c
+  - enabled: 1
+    path: Assets/Scenes/Poziom 2.unity
+    guid: d033170697372cf4e866a1b1029addac
+  - enabled: 1
+    path: Assets/Scenes/Poziom 3.unity
+    guid: cba24f41b90e6b145943669da8834005
+  - enabled: 1
+    path: Assets/Scenes/Poziom 4.unity
+    guid: 5efea353276cfbb46a0f1dd95e35036c
+  - enabled: 1
+    path: Assets/Scenes/Poziom 5.unity
+    guid: 2ebd4e8cb7a31e14ebdedaf6763ee797
   m_configObjects:
     com.unity.input.settings.actions: {fileID: -944628639613478452, guid: 2bcd2660ca9b64942af0de543d8d7100, type: 3}
   m_UseUCBPForAssetBundles: 0
