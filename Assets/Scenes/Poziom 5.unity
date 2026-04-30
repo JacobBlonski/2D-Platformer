@@ -5913,7 +5913,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2d25514201a33ef4d9eb12fc891bc30c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  sceneName: GameFail
+  sceneName: WelcomeScreen
 --- !u!61 &1221207870
 BoxCollider2D:
   m_ObjectHideFlags: 0
