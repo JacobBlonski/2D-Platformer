@@ -5,6 +5,7 @@ using UnityEngine.Rendering;
 
 public class PlayerMotor : MonoBehaviour
 {
+
     Vector2 direction;
     private bool canJump = true;
     private Rigidbody2D rigidbody2D;
@@ -12,8 +13,11 @@ public class PlayerMotor : MonoBehaviour
     public float jumpForce = 5;
     public float maxSpeed = 10;
     public float stopingForce = 10;
-    public float stoppingForce = 10;
-    public float points;
+    public float multijump;
+    public float multijumps = 2;
+    private float stoppingForce;
+    private float max_jumps;
+
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     private void Start()
     {
@@ -25,7 +29,6 @@ public class PlayerMotor : MonoBehaviour
         rigidbody2D.AddForce(new Vector2(direction.x * speed, 0));
 
         MaxSpeed();
-
         PlayerStopping();
     }
 
@@ -60,7 +63,18 @@ public class PlayerMotor : MonoBehaviour
         {
 
             rigidbody2D.AddForce(Vector2.up * jumpForce, ForceMode2D.Impulse);
-            canJump = false;
+            if (multijump > 0)
+            {
+
+                multijump--;
+
+            }
+            else if(multijump == 0)
+            {
+
+                canJump = false;
+            }
+               
         }
     }
 
@@ -68,6 +82,7 @@ public class PlayerMotor : MonoBehaviour
     private void OnCollisionEnter2D(Collision2D collision)
     {
         canJump = true;
+        multijump = max_jumps;
     }
 }
 
