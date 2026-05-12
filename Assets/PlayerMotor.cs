@@ -1,7 +1,9 @@
+using System.Collections;
 using System.Runtime.CompilerServices;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.Rendering;
+using UnityEngine.UIElements;
 
 public class PlayerMotor : MonoBehaviour
 {
@@ -11,6 +13,7 @@ public class PlayerMotor : MonoBehaviour
     private Rigidbody2D rigidbody2D;
     public float speed = 5;
     public float jumpForce = 5;
+    public float dashForce = 50;
     public float maxSpeed = 10;
     public float stopingForce = 10;
     public float multijump;
@@ -19,7 +22,8 @@ public class PlayerMotor : MonoBehaviour
     private float max_jumps;
     private int _jumpcount;
     private int maxJumpCount;
-    private bool _canJump;
+    private bool _canJump = true;
+    private bool _isDashing = false;
     private int _jumpCount;
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
@@ -38,6 +42,10 @@ public class PlayerMotor : MonoBehaviour
 
     private void MaxSpeed()
     {
+        if (_isDashing)
+        {
+            return;
+        }
         if (rigidbody2D.linearVelocityX >= maxSpeed)
         {
             rigidbody2D.linearVelocityX = maxSpeed;
@@ -68,16 +76,32 @@ public class PlayerMotor : MonoBehaviour
 
             rigidbody2D.AddForce(Vector2.up * jumpForce, ForceMode2D.Impulse);
             _jumpcount++;
-            if(_jumpcount >= maxJumpCount)
+            if (_jumpcount >= maxJumpCount)
             {
 
                 _canJump = false;
             }
-               
+
         }
+
     }
 
+    private void OnDash()
+    {
+        if(_isDashing)
+        {
+            return;
+        }
+        _isDashing = true;
+        rigidbody2D.AddForce(new Vector2(direction.x * dashForce,0), ForceMode2D.Impulse);
+        StartCoroutine(ResetDash(2));
+    }
 
+    IEnumerator ResetDash(float timeToRest)
+    {
+        yield return new WaitForSeconds(timeToRest);
+        _isDashing = false;
+    }
     private void OnCollisionEnter2D(Collision2D collision)
     {
         _canJump = true;
