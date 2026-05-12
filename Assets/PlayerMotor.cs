@@ -14,11 +14,13 @@ public class PlayerMotor : MonoBehaviour
     public float speed = 5;
     public float jumpForce = 5;
     public float dashForce = 50;
+    public float dashTime = 0.2f;
     public float maxSpeed = 10;
     public float stopingForce = 10;
     public float multijump;
     public float multijumps = 2;
     private float stoppingForce;
+    private float stoppingPoint = 0.1f;
     private float max_jumps;
     private int _jumpcount;
     private int maxJumpCount;
@@ -94,7 +96,7 @@ public class PlayerMotor : MonoBehaviour
         }
         _isDashing = true;
         rigidbody2D.AddForce(new Vector2(direction.x * dashForce,0), ForceMode2D.Impulse);
-        StartCoroutine(ResetDash(2));
+        StartCoroutine(ResetDash(dashTime));
     }
 
     IEnumerator ResetDash(float timeToRest)
