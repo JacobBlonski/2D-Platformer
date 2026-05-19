@@ -29,14 +29,16 @@ public class PlayerMotor : MonoBehaviour
     private bool _canJump = true;
     private bool _isDashing = false;
     private int _jumpCount;
+    private float initXScale;
 
     private void Start()
     { 
      rigidbody2D = GetComponent<Rigidbody2D>();
      _animator = GetComponent<Animator>();
+     initXScale = transform.localScale.x;
     
     }
-    
+
     // Update is called once per frame
     private void FixedUpdate()
     {
@@ -52,23 +54,34 @@ public class PlayerMotor : MonoBehaviour
         {
             _animator.SetBool("IsMoving", false);
         }
-    }
 
-    private void MaxSpeed()
-    {
-        if (_isDashing)
+        if (direction.x > 0)
         {
-            return;
+
+            transform.localScale = new Vector3(initXScale, transform.localScale.y, transform.localScale.z);
+
         }
-        if (rigidbody2D.linearVelocityX >= maxSpeed)
+        else if (direction.x < 0)
         {
-            rigidbody2D.linearVelocityX = maxSpeed;
-        }
-        else if (rigidbody2D.linearVelocityX <= -maxSpeed)
-        {
-            rigidbody2D.linearVelocityX = -maxSpeed;
+            transform.localScale = new Vector3(-initXScale, transform.localScale.y, transform.localScale.z);
+
         }
     }
+            private void MaxSpeed()
+            {
+                if (_isDashing)
+                {
+                    return;
+                }
+                if (rigidbody2D.linearVelocityX >= maxSpeed)
+                {
+                    rigidbody2D.linearVelocityX = maxSpeed;
+                }
+                else if (rigidbody2D.linearVelocityX <= -maxSpeed)
+                {
+                    rigidbody2D.linearVelocityX = -maxSpeed;
+                }
+            }
 
     private void PlayerStopping()
     {
