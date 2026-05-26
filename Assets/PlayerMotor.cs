@@ -5,6 +5,7 @@ using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.Rendering;
 using UnityEngine.UIElements;
+using static UnityEngine.RuleTile.TilingRuleOutput;
 
 public class PlayerMotor : MonoBehaviour
 {
@@ -104,6 +105,10 @@ public class PlayerMotor : MonoBehaviour
     {
         if (canJump)
         {
+            _animator.SetBool("IsRotating", true);
+            _animator.SetBool("IsMoving", false);
+            transform.localScale = new Vector3(initXScale, transform.localScale.y, transform.localScale.z);
+            transform.localScale = new Vector3(-initXScale, transform.localScale.y, transform.localScale.z);
 
             rigidbody2D.AddForce(Vector2.up * jumpForce, ForceMode2D.Impulse);
             _jumpcount++;
@@ -136,33 +141,6 @@ public class PlayerMotor : MonoBehaviour
     {
         _canJump = true;
         _jumpCount = 0;
-    }
-}
-
-public class PlayerController : MonoBehaviour
-{
-    public Vector3 jump;
-    public float jumpForce = 2.0f;
-
-    public bool isGrounded;
-    Rigidbody rb;
-    void Start()
-    {
-        rb = GetComponent<Rigidbody>();
-        jump = new Vector3(0.0f, 2.0f, 0.0f);
-    }
-    void OnCollisionStay()
-    {
-        isGrounded = true;
-    }
-
-    void Update()
-    {
-        if (Input.GetKeyDown(KeyCode.Space) && isGrounded)
-        {
-            rb.AddForce(jump * jumpForce, ForceMode.Impulse);
-            isGrounded = false;
-        }
     }
 }
 
