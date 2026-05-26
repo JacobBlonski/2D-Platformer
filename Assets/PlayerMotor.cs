@@ -15,6 +15,7 @@ public class PlayerMotor : MonoBehaviour
     private Animator _animator;
     public float speed = 5;
     public float jumpForce = 5;
+    public float spinSpeed = 10;
     public float dashForce = 50;
     public float dashTime = 0.2f;
     public float maxSpeed = 10;
@@ -42,6 +43,9 @@ public class PlayerMotor : MonoBehaviour
     // Update is called once per frame
     private void FixedUpdate()
     {
+        //if obracanie
+        //obracaj
+        //po x czasu zrestartuj
         rigidbody2D.AddForce(new Vector2(direction.x * speed, 0));
 
         MaxSpeed();
@@ -105,10 +109,9 @@ public class PlayerMotor : MonoBehaviour
             _jumpcount++;
             if (_jumpcount >= maxJumpCount)
             {
-
                 _canJump = false;
             }
-
+               
         }
 
     }
@@ -136,5 +139,30 @@ public class PlayerMotor : MonoBehaviour
     }
 }
 
+public class PlayerController : MonoBehaviour
+{
+    public Vector3 jump;
+    public float jumpForce = 2.0f;
 
+    public bool isGrounded;
+    Rigidbody rb;
+    void Start()
+    {
+        rb = GetComponent<Rigidbody>();
+        jump = new Vector3(0.0f, 2.0f, 0.0f);
+    }
+    void OnCollisionStay()
+    {
+        isGrounded = true;
+    }
+
+    void Update()
+    {
+        if (Input.GetKeyDown(KeyCode.Space) && isGrounded)
+        {
+            rb.AddForce(jump * jumpForce, ForceMode.Impulse);
+            isGrounded = false;
+        }
+    }
+}
 
